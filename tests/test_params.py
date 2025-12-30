@@ -1,3 +1,8 @@
+"""
+Params(Enum)が意図したパラメータを構築できているかを確認するテスト
+"""
+
+
 from datetime import datetime
 from urllib.parse import quote_plus
 
