@@ -57,7 +57,6 @@ class Params(Enum):
         self,
         value: Union[str, int, bool, datetime, Platform, Mode]
     ) -> str:
-
         """
         URLパラメータとして利用できる文字列を作成する関数
 
@@ -71,18 +70,15 @@ class Params(Enum):
         :return: 組み立て済みURLパラメータ文字列(日付は必要なパラメータを全て文字列結合したものが返る)
         """
 
-        result = ""
         entry = f"entry.{self.value}"
 
         if isinstance(value, Platform) or isinstance(value, Mode):
             value = value.value
 
         if isinstance(value, datetime):
-            result += f"{entry}_year={quote_plus(str(value.year))}&"
-            result += f"{entry}_month={quote_plus(str(value.month))}&"
-            result += f"{entry}_day={quote_plus(str(value.day))}&"
-            result += f"{entry}_hour={quote_plus(str(value.hour))}&"
-            result += f"{entry}_minute={quote_plus(str(value.minute))}"
+            params = ["year", "month", "day", "hour", "minute"]
+            results = [f"{entry}_{param}={quote_plus(str(getattr(value, param)))}" for param in params]
+            result = "&".join(results)
         else:
             result = f"{entry}={quote_plus(str(value))}"
 
