@@ -11,8 +11,8 @@ REM ============================
 set PYTHON_EXE=%BASE_DIR%\.venv\Scripts\python.exe
 
 if not exist "%PYTHON_EXE%" (
-    echo [ERROR] 仮想環境の Python が見つかりません
-    echo setup_env.bat を先に実行してください
+    echo [ERROR] venv not found
+    echo execute first setup_env.bat
     pause
     exit /b 1
 )
@@ -45,11 +45,11 @@ schtasks /change ^
   /ri 360
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] タスクの登録に失敗しました
+    echo [ERROR] failed to registration task
     pause
     exit /b 1
 )
 
-echo [OK] タスク "%TASK_NAME%" を 6時間ごとに実行するよう登録しました
+echo [OK] task name "%TASK_NAME%" registered
 echo 実行時刻: 00:00 / 06:00 / 12:00 / 18:00
 pause

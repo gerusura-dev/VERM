@@ -4,10 +4,10 @@ set TASK_NAME=VRCEventAutoRegister
 schtasks /delete /tn "%TASK_NAME%" /f
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] タスクの削除に失敗しました
+    echo [ERROR] failed to delete task
     pause
     exit /b 1
 )
 
-echo [OK] タスク "%TASK_NAME%" を削除しました
+echo [OK] task name "%TASK_NAME%" deleted
 pause
