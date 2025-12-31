@@ -7,7 +7,7 @@ cd /d %~dp0
 echo [INFO] Checking Python...
 py --version
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] Python が見つかりません
+    echo [ERROR] Python not found
     pause
     exit /b 1
 )
@@ -20,7 +20,7 @@ py -m pip install --upgrade pip
 py -m pip install --upgrade uv
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] uv のインストールに失敗しました
+    echo [ERROR] failed to install uv
     pause
     exit /b 1
 )
@@ -32,7 +32,7 @@ echo [INFO] Creating virtual environment (.venv)...
 py -m uv venv .venv
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] 仮想環境の作成に失敗しました
+    echo [ERROR] failed to create venv
     pause
     exit /b 1
 )
@@ -44,11 +44,11 @@ if exist pyproject.toml (
     echo [INFO] Installing dependencies from pyproject.toml...
     py -m uv pip install -r pyproject.toml
 ) else (
-    echo [WARN] pyproject.toml が見つかりません（依存関係は未インストール）
+    echo [WARN] pyproject.toml not found
 )
 
 echo.
-echo [OK] セットアップ完了
+echo [OK] setup complete
 echo.
-echo 仮想環境: %CD%\.venv
+echo venv: %CD%\.venv
 pause
