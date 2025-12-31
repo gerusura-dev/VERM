@@ -47,7 +47,7 @@ class Platform(Enum):
     @classmethod
     def get_platform(cls, value: str) -> Optional["Platform"]:
         if value == "PC":
-            return Platform.PCAndroid
+            return Platform.PC
         elif value == "PC/Android":
             return Platform.PCAndroid
         elif value == "Android":

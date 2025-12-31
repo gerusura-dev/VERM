@@ -47,6 +47,41 @@ if exist pyproject.toml (
     echo [WARN] pyproject.toml not found
 )
 
+REM =====================================
+REM chrome_profile 初期化
+REM =====================================
+set CHROME_PROFILE=%CD%\chrome_profile
+set FIRST_RUN_FLAG=%CHROME_PROFILE%\FirstRun.done
+
+if not exist "%CHROME_PROFILE%" (
+    mkdir "%CHROME_PROFILE%"
+)
+
+REM =====================================
+REM 初回のみ Chrome 起動
+REM =====================================
+if not exist "%FIRST_RUN_FLAG%" (
+    echo.
+    echo === First time setup detected ===
+    echo Chrome will be launched automatically.
+    echo Please log in to Google and then close Chrome.
+    echo.
+
+    start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" ^
+      --user-data-dir="%CHROME_PROFILE%"
+
+    echo.
+    echo After finishing login, close Chrome and press any key.
+    pause
+
+    echo done > "%FIRST_RUN_FLAG%"
+)
+
+echo.
+echo === setup completed ===
+echo chrome_profile: %CHROME_PROFILE%
+pause
+
 echo.
 echo [OK] setup complete
 echo.

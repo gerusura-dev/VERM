@@ -6,13 +6,12 @@ set BASE_DIR=%~dp0
 cd /d %BASE_DIR%
 
 REM ============================
-REM 仮想環境の Python を自動検出
+REM 実行する bat
 REM ============================
-set PYTHON_EXE=%BASE_DIR%\.venv\Scripts\python.exe
+set RUN_BAT=%BASE_DIR%\run.bat
 
-if not exist "%PYTHON_EXE%" (
-    echo [ERROR] venv not found
-    echo execute first setup_env.bat
+if not exist "%RUN_BAT%" (
+    echo [ERROR] run.bat not found
     pause
     exit /b 1
 )
@@ -21,14 +20,13 @@ REM ============================
 REM 設定
 REM ============================
 set TASK_NAME=VRCEventAutoRegister
-set SCRIPT=%BASE_DIR%\main.py
 
 REM ============================
 REM タスク登録
 REM ============================
 schtasks /create ^
   /tn "%TASK_NAME%" ^
-  /tr "\"%PYTHON_EXE%\" \"%SCRIPT%\"" ^
+  /tr "cmd.exe /c \"\"%RUN_BAT%\"\"" ^
   /sc DAILY ^
   /st 00:00 ^
   /ri 360 ^
@@ -38,14 +36,14 @@ schtasks /create ^
   /f
 
 REM ============================
-REM 取りこぼし防止
+REM 取りこぼし防止（念のため再設定）
 REM ============================
 schtasks /change ^
   /tn "%TASK_NAME%" ^
   /ri 360
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] failed to registration task
+    echo [ERROR] failed to register task
     pause
     exit /b 1
 )

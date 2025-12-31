@@ -1,5 +1,4 @@
 import os
-import json
 from typing import List, Iterator, Optional
 from configparser import ConfigParser
 from datetime import datetime, timedelta

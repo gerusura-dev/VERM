@@ -14,31 +14,18 @@ from .builder import Payload
 
 
 class AutoSubmitter:
-    """
-    デバッグ時は以下のコマンドでGoogle Chromeをデバッグモードで立ち上げる
-
-    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \ --remote-debugging-port=9222 \ --user-data-dir=/tmp/chrome-debug
-    """
-
-    def __init__(self, debug: bool = False, timeout: int = 10) -> None:
-        self.debug = debug
+    def __init__(self, timeout: int = 10) -> None:
         self.timeout = timeout
         self.driver = self._create_driver()
 
-    def _create_driver(self) -> webdriver.Chrome:
+    @staticmethod
+    def _create_driver() -> webdriver.Chrome:
         options = Options()
 
-        if self.debug:
-            options.add_experimental_option(
-                "debuggerAddress",
-                f"127.0.0.1:9222",
-            )
-        else:
-            options.add_argument("--headless=new")
-            options.add_argument("--disable-gpu")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--window-size=1280,900")
-            options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option(
+            "debuggerAddress",
+            f"127.0.0.1:9222",
+        )
 
         service = Service(ChromeDriverManager().install())
         return webdriver.Chrome(service=service, options=options)
@@ -86,8 +73,7 @@ class AutoSubmitter:
             self.__input_text_by_heading(driver, wait, remarks_element, payload.remarks)
 
             # 送信ボタンをクリック
-            if not self.debug:
-                self.__click_submit_button(driver, wait)
+            self.__click_submit_button(driver, wait)
         except:
             raise RuntimeError
         else:
