@@ -30,10 +30,19 @@ schtasks /create ^
   /tn "%TASK_NAME%" ^
   /tr "\"%PYTHON_EXE%\" \"%SCRIPT%\"" ^
   /sc DAILY ^
-  /st 09:00 ^
+  /st 00:00 ^
+  /ri 360 ^
+  /du 24:00 ^
   /ru "%USERNAME%" ^
   /rl HIGHEST ^
   /f
+
+REM ============================
+REM 取りこぼし防止
+REM ============================
+schtasks /change ^
+  /tn "%TASK_NAME%" ^
+  /ri 360
 
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] タスクの登録に失敗しました
@@ -41,5 +50,6 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-echo [OK] タスク "%TASK_NAME%" を登録しました
+echo [OK] タスク "%TASK_NAME%" を 6時間ごとに実行するよう登録しました
+echo 実行時刻: 00:00 / 06:00 / 12:00 / 18:00
 pause
