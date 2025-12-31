@@ -4,7 +4,7 @@ from utils import AutoSubmitter
 
 def main():
     manager = EventManager()
-    submitter = AutoSubmitter(debug=True)
+    submitter = AutoSubmitter()
 
     try:
         for payload in manager:
