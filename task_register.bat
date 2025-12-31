@@ -51,5 +51,5 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo [OK] task name "%TASK_NAME%" registered
-echo 実行時刻: 00:00 / 06:00 / 12:00 / 18:00
+echo execute time: 00:00 / 06:00 / 12:00 / 18:00
 pause
