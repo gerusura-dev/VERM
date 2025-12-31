@@ -1,53 +1,54 @@
 @echo off
-REM ============================
-REM bat のあるディレクトリへ
-REM ============================
+REM =====================================
+REM プロジェクトディレクトリへ移動
+REM =====================================
 cd /d %~dp0
 
-echo [INFO] Checking Python launcher...
+echo [INFO] Checking Python...
 py --version
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] Python launcher (py) not found
+    echo [ERROR] Python が見つかりません
     pause
     exit /b 1
 )
 
-REM ============================
-REM pip / uv インストール
-REM ============================
-echo [INFO] Installing uv via pip...
+REM =====================================
+REM uv インストール
+REM =====================================
+echo [INFO] Installing uv...
 py -m pip install --upgrade pip
 py -m pip install --upgrade uv
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] failed to install uv
+    echo [ERROR] uv のインストールに失敗しました
     pause
     exit /b 1
 )
 
-REM ============================
+REM =====================================
 REM 仮想環境作成
-REM ============================
+REM =====================================
 echo [INFO] Creating virtual environment (.venv)...
 py -m uv venv .venv
 
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] failed to create venv
+    echo [ERROR] 仮想環境の作成に失敗しました
     pause
     exit /b 1
 )
 
-REM ============================
+REM =====================================
 REM 依存関係インストール
-REM ============================
+REM =====================================
 if exist pyproject.toml (
     echo [INFO] Installing dependencies from pyproject.toml...
     py -m uv pip install -r pyproject.toml
 ) else (
-    echo [WARN] pyproject.toml not found
+    echo [WARN] pyproject.toml が見つかりません（依存関係は未インストール）
 )
 
 echo.
-echo [OK] setup complete
-echo venv: %CD%\.venv
+echo [OK] セットアップ完了
+echo.
+echo 仮想環境: %CD%\.venv
 pause
