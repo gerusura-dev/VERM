@@ -31,18 +31,12 @@ REM =====================================
 echo [INFO] Creating virtual environment (.venv)...
 py -m uv venv .venv
 
-if %ERRORLEVEL% neq 0 (
-    echo [ERROR] failed to create venv
-    pause
-    exit /b 1
-)
-
 REM =====================================
 REM 依存関係インストール
 REM =====================================
 if exist pyproject.toml (
-    echo [INFO] Installing dependencies from pyproject.toml...
-    py -m uv pip install -r pyproject.toml
+    echo [INFO] Installing dependencies into .venv...
+    py -m uv run pip install -r pyproject.toml
 ) else (
     echo [WARN] pyproject.toml not found
 )
