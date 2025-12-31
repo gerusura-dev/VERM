@@ -31,4 +31,10 @@ cloneしてきたフォルダ内の「task_delete」を管理者権限で実行�
 （拡張子が表示される設定の場合、「task_delete.bat」を探して実行）
 
 ### config.iniファイルを設定
-cloneしてきたフォルダ内にある「config.ini」を説明に従って記載する
+cloneしてきたフォルダ内にある「config.ini.sample」を説明に従って記載し、「config.ini」に名前を変える
+
+### アップデート
+本プロジェクトのアップデートを適用するには、コマンドプロンプトでcloneしたフォルダ内から以下を実行
+```bash
+git pull
+```
