@@ -8,13 +8,31 @@ https://docs.google.com/forms/{フォーム情報}/viewform?usp=pp_url&entry.{�
 
 
 from enum import Enum
-from typing import Union
+from typing import Union, Optional
 from datetime import datetime
 from urllib.parse import quote_plus
 
 
 # VRCイベントカレンダーのイベント登録用GoogleFormsのベースURL定数
 VRCEventCalendarBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSfJlabb7niRTf4rX2Q0wRc3ua9MuOEIKveo7NirR6zuOo6D9A/viewform?usp=pp_url"
+
+
+class Category(Enum):
+    A = "アバター試着会"
+    B = "改変アバター交流会"
+    C = "その他交流会"
+    D = "VR飲み会"
+    E = "店舗系イベント"
+    F = "音楽系イベント"
+    G = "学術系イベント"
+    H = "ロールプレイ"
+    I = "初心者向けイベント"
+    J = "定期イベント"
+
+    @classmethod
+    def get_category(cls, num: int) -> "Category":
+        category_list = [element for element in cls.__members__.values()]
+        return category_list[num]
 
 
 class Platform(Enum):
@@ -24,7 +42,18 @@ class Platform(Enum):
 
     PC = "PC"
     PCAndroid = "PC/android"
-    Android = "android+only"
+    Android = "android only"
+
+    @classmethod
+    def get_platform(cls, value: str) -> Optional["Platform"]:
+        if value == "PC":
+            return Platform.PCAndroid
+        elif value == "PC/Android":
+            return Platform.PCAndroid
+        elif value == "Android":
+            return Platform.Android
+        else:
+            return None
 
 
 class Mode(Enum):

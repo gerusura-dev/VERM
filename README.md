@@ -1,1 +1,1 @@
-# VRC Event calendar Registration Manager
+# VERM: VRC Event calendar Registration Manager
