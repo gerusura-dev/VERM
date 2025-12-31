@@ -36,7 +36,7 @@ REM 依存関係インストール
 REM =====================================
 if exist pyproject.toml (
     echo [INFO] Installing dependencies into .venv...
-    py -m uv run pip install -r pyproject.toml
+    py -m uv run pip install .
 ) else (
     echo [WARN] pyproject.toml not found
 )

@@ -160,7 +160,6 @@ class AutoSubmitter:
 
         input_box = container.find_element(By.XPATH, ".//input[@type='text']")
 
-        input_box.clear()
         input_box.send_keys(value)
 
         driver.execute_script(
@@ -182,7 +181,6 @@ class AutoSubmitter:
             )
         )
 
-        input_box.clear()
         input_box.send_keys(value)
 
     @staticmethod
