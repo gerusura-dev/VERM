@@ -1,3 +1,4 @@
+import time
 import json
 from datetime import datetime
 
@@ -46,6 +47,7 @@ class AutoSubmitter:
             self.__click_checkbox(driver, wait, checkbox_element)
 
             # 次へボタンをクリック
+            time.sleep(1)
             next_button_element = "//div[@role='button' and (.//span[text()='次へ'] or .//span[text()='Next'])]"
             self.__click_button(wait, next_button_element)
 
@@ -73,6 +75,7 @@ class AutoSubmitter:
             self.__input_text_by_heading(driver, wait, remarks_element, payload.remarks)
 
             # 送信ボタンをクリック
+            time.sleep(1)
             self.__click_submit_button(driver, wait)
         except:
             raise RuntimeError
@@ -87,6 +90,8 @@ class AutoSubmitter:
                     ensure_ascii=False,
                     indent=2
                 )
+
+            time.sleep(3)
 
 
     def close(self) -> None:

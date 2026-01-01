@@ -15,5 +15,3 @@ timeout /t 5 > nul
 
 echo [INFO] Running Python script...
 .venv\Scripts\python.exe main.py
-
-pause
