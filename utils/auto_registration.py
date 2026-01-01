@@ -39,10 +39,12 @@ class AutoSubmitter:
             wait = WebDriverWait(driver, self.timeout)
 
             # 入力内容の履歴を無視して上書きする
+            time.sleep(0.3)
             overwrite_element = "//div[@role='alertdialog']//a[.//span[text()='続行']]"
             self.__click_overwrite(driver, wait, overwrite_element)
 
             # 返信用メールアドレスをチェックする
+            time.sleep(0.3)
             checkbox_element = "//div[@role='checkbox' and contains(@aria-label,'返信に表示するメールアドレスとして')]"
             self.__click_checkbox(driver, wait, checkbox_element)
 
@@ -52,25 +54,31 @@ class AutoSubmitter:
             self.__click_button(wait, next_button_element)
 
             # イベント主催者を記入する
+            time.sleep(0.3)
             self.__owner_input_text(driver, wait, payload.owner)
 
             # イベント内容を記入する
+            time.sleep(0.3)
             description_element = "//textarea[contains(@aria-labelledby,'i6')]"
             self.__input_text(wait, description_element, payload.desc)
 
             # イベントのカテゴリーをチェックする
+            time.sleep(0.3)
             if payload.category is not None:
                 self.__select_category_checkbox(driver, wait, payload.category.value)
 
             # 参加条件を記入
+            time.sleep(0.3)
             condition_element = "参加条件"
             self.__input_text_by_heading(driver, wait, condition_element, payload.condition)
 
             # 参加方法を記入
+            time.sleep(0.3)
             direction_element = "参加方法"
             self.__input_text_by_heading(driver, wait, direction_element, payload.direction)
 
             # 備考を記入
+            time.sleep(0.3)
             remarks_element = "備考"
             self.__input_text_by_heading(driver, wait, remarks_element, payload.remarks)
 
