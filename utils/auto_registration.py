@@ -39,51 +39,51 @@ class AutoSubmitter:
             wait = WebDriverWait(driver, self.timeout)
 
             # 入力内容の履歴を無視して上書きする
-            time.sleep(0.3)
+            time.sleep(0.2)
             overwrite_element = "//div[@role='alertdialog']//a[.//span[text()='続行']]"
             self.__click_overwrite(driver, wait, overwrite_element)
 
             # 返信用メールアドレスをチェックする
-            time.sleep(0.3)
+            time.sleep(0.2)
             checkbox_element = "//div[@role='checkbox' and contains(@aria-label,'返信に表示するメールアドレスとして')]"
             self.__click_checkbox(driver, wait, checkbox_element)
 
             # 次へボタンをクリック
-            time.sleep(1)
+            time.sleep(0.5)
             next_button_element = "//div[@role='button' and (.//span[text()='次へ'] or .//span[text()='Next'])]"
             self.__click_button(wait, next_button_element)
 
             # イベント主催者を記入する
-            time.sleep(0.3)
+            time.sleep(0.2)
             self.__owner_input_text(driver, wait, payload.owner)
 
             # イベント内容を記入する
-            time.sleep(0.3)
+            time.sleep(0.2)
             description_element = "//textarea[contains(@aria-labelledby,'i6')]"
             self.__input_text(wait, description_element, payload.desc)
 
             # イベントのカテゴリーをチェックする
-            time.sleep(0.3)
+            time.sleep(0.2)
             if payload.category is not None:
                 self.__select_category_checkbox(driver, wait, payload.category.value)
 
             # 参加条件を記入
-            time.sleep(0.3)
+            time.sleep(0.2)
             condition_element = "参加条件"
             self.__input_text_by_heading(driver, wait, condition_element, payload.condition)
 
             # 参加方法を記入
-            time.sleep(0.3)
+            time.sleep(0.2)
             direction_element = "参加方法"
             self.__input_text_by_heading(driver, wait, direction_element, payload.direction)
 
             # 備考を記入
-            time.sleep(0.3)
+            time.sleep(0.2)
             remarks_element = "備考"
             self.__input_text_by_heading(driver, wait, remarks_element, payload.remarks)
 
             # 送信ボタンをクリック
-            time.sleep(1)
+            time.sleep(0.5)
             self.__click_submit_button(driver, wait)
         except:
             raise RuntimeError
