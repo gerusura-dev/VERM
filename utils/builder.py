@@ -1,5 +1,6 @@
 import json
 import hashlib
+from logging import Logger
 from typing import Tuple, Optional
 from datetime import datetime
 from dataclasses import dataclass
@@ -9,6 +10,7 @@ from .params import Mode, Params, Platform, Category, VRCEventCalendarBaseURL as
 
 @dataclass(slots=True)
 class Payload:
+    logger: Logger
     section: str
     event_name: str
     platform: Platform
@@ -24,6 +26,7 @@ class Payload:
 
     def __init__(
         self,
+        logger: Logger,
         section: str,
         event_name: str,
         platform: Platform,
@@ -37,6 +40,8 @@ class Payload:
         direction: str,
         remarks: str
     ) -> None:
+        self.logger = logger
+
         self.__valid(
             event_name,
             platform,
@@ -74,8 +79,8 @@ class Payload:
             Params.Mode.build(self.mode),
         )
 
-    @staticmethod
     def __valid(
+        self,
         event_name: str,
         platform: Platform,
         start_date_time: datetime,
@@ -89,47 +94,61 @@ class Payload:
         remarks: str
     ) -> None:
         if not isinstance(event_name, str):
+            self.logger.error(f"イベント名: {event_name} は不正です ... type(event_name): {type(event_name)})")
             raise TypeError
 
         if not isinstance(platform, Platform):
+            self.logger.error(f"プラットフォーム名: {platform} は不正です ... type(platform): {type(platform)})")
             raise TypeError
 
         if not isinstance(start_date_time, datetime):
+            self.logger.error(f"開始時刻: {start_date_time} は不正です ... type(start_date_tme): {type(start_date_time)})")
             raise TypeError
 
         if not isinstance(end_date_time, datetime):
+            self.logger.error(f"終了時刻: {end_date_time} は不正です ... type(end_date_tme): {type(end_date_time)}")
             raise TypeError
 
         if not isinstance(mode, Mode):
+            self.logger.error(f"登録モード: {mode} は不正です ... type(mode): {type(mode)}")
             raise TypeError
 
         if not isinstance(owner, str):
+            self.logger.error(f"主催者: {owner} は不正です ... type(owner): {type(owner)}")
             raise TypeError
 
         if not isinstance(desc, str):
+            self.logger.error(f"イベント説明: {desc} は不正です ... type(desc): {type(desc)}")
             raise TypeError
 
         if not isinstance(category, Category):
+            self.logger.error(f"イベント分類: {category} は不正です ... type(category): {type(category)}")
             raise TypeError
 
         if not isinstance(condition, str) and condition is not None:
+            self.logger.error(f"イベント参加資格: {condition} は不正です ... type(condition): {type(condition)}")
             raise TypeError
 
         if not isinstance(direction, str):
+            self.logger.error(f"イベント参加方法: {direction} は不正です ... type(direction): {type(direction)}")
             raise TypeError
 
         if not isinstance(remarks, str):
+            self.logger.error(f"備考: {remarks} は不正です ... type(remarks): {type(remarks)}")
             raise TypeError
 
         today = datetime.now()
 
         if start_date_time < today:
+            self.logger.error(f"開始日時が過去です: start_date_time={start_date_time}, today={today}")
             raise ValueError
 
         if end_date_time < today:
+            self.logger.error(f"終了日時が過去です: end_date_time={end_date_time}, today={today}")
             raise ValueError
 
         if end_date_time < start_date_time:
+            self.logger.error(f"終了日時は開始日時の後である必要があります: end_date_time={end_date_time}, start_date_time={start_date_time}")
             raise ValueError
 
     @property

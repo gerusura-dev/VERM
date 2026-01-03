@@ -1,4 +1,5 @@
 import os
+from logging import Logger
 from typing import List, Iterator, Optional
 from configparser import ConfigParser
 from datetime import datetime, timedelta
@@ -8,14 +9,27 @@ from .params import Mode, Platform, Category
 
 
 class EventManager:
-    def __init__(self, config_file: str = "config.ini") -> None:
+    def __init__(self, logger: Logger, config_file: str = "config.ini") -> None:
+        self.logger = logger
+
+        # 設定ファイルの存在確認
         if not os.path.isfile(config_file):
+            self.logger.critical(f"設定ファイル {config_file} が見つかりませんでした")
             raise FileNotFoundError()
 
+        # 設定ファイル読み込み
         self.__config = ConfigParser()
         self.__config.read(config_file, encoding="utf-8")
 
+        # 登録対象の抽出
         self.event_list = self.__config_parser()
+
+        # 抽出結果出力
+        if self.event_list:
+            events = ", ".join([event.event_name for event in self.event_list])
+            self.logger.info(f"New events: {events}")
+        else:
+            self.logger.info(f"New events: なし")
 
     def __iter__(self) -> Iterator[Payload]:
         return iter(self.event_list)
@@ -36,6 +50,7 @@ class EventManager:
             remarks = self.__config[section]["REMARKS"]
 
             if platform is None:
+                self.logger.critical(f"プラットフォームは「PC」「PC/Android」「Android」のいずれかで指定してください ... platform={platform}")
                 raise ValueError
 
             category = category if category != "" else None
@@ -53,6 +68,7 @@ class EventManager:
             os.makedirs(f"tracer/{section}", exist_ok=True)
 
             payload = Payload(
+                logger=self.logger,
                 section=section,
                 event_name=event_name,
                 platform=platform,
@@ -68,6 +84,7 @@ class EventManager:
             )
 
             if not os.path.exists(f"tracer/{section}/{payload.hash}.json"):
+                self.logger.info(f"イベントキュー: {payload.event_name} 追加")
                 event_list.append(payload)
 
         return event_list
@@ -87,7 +104,7 @@ class EventManager:
             hour=base_date.hour,
             minute=base_date.minute,
             second=0,
-            microsecond=0,
+            microsecond=0
         )
 
         if candidate <= now:

@@ -1,5 +1,6 @@
 import time
 import json
+from logging import Logger
 from datetime import datetime
 
 from selenium import webdriver
@@ -15,7 +16,8 @@ from .builder import Payload
 
 
 class AutoSubmitter:
-    def __init__(self, timeout: int = 10) -> None:
+    def __init__(self, logger: Logger, timeout: int = 10) -> None:
+        self.logger = logger
         self.timeout = timeout
         self.driver = self._create_driver()
 
@@ -34,58 +36,82 @@ class AutoSubmitter:
     def submit(self, payload: Payload) -> None:
         try:
             driver = self.driver
+            self.logger.info("ページ読み込み処理")
+            self.logger.info(f"Load URL: {payload.url}")
             driver.get(payload.url)
+            self.logger.info("ページ読み込み完了")
 
             wait = WebDriverWait(driver, self.timeout)
 
             # 入力内容の履歴を無視して上書きする
             time.sleep(0.2)
+            self.logger.info("上書き同意中・・・")
             overwrite_element = "//div[@role='alertdialog']//a[.//span[text()='続行']]"
             self.__click_overwrite(driver, wait, overwrite_element)
+            self.logger.info("上書き同意完了")
 
             # 返信用メールアドレスをチェックする
             time.sleep(0.2)
+            self.logger.info("返信用メールアドレスのチェック中・・・")
             checkbox_element = "//div[@role='checkbox' and contains(@aria-label,'返信に表示するメールアドレスとして')]"
             self.__click_checkbox(driver, wait, checkbox_element)
+            self.logger.info("返信用メールアドレスのチェック完了")
 
             # 次へボタンをクリック
             time.sleep(0.5)
+            self.logger.info("ページ遷移中・・・")
             next_button_element = "//div[@role='button' and (.//span[text()='次へ'] or .//span[text()='Next'])]"
             self.__click_button(wait, next_button_element)
+            self.logger.info("ページ遷移完了")
 
             # イベント主催者を記入する
             time.sleep(0.2)
+            self.logger.info("主催者記入中・・・")
             self.__owner_input_text(driver, wait, payload.owner)
+            self.logger.info("主催者記入完了")
 
             # イベント内容を記入する
             time.sleep(0.2)
+            self.logger.info("イベント内容記入中・・・")
             description_element = "//textarea[contains(@aria-labelledby,'i6')]"
             self.__input_text(wait, description_element, payload.desc)
+            self.logger.info("イベント内容記入済")
 
             # イベントのカテゴリーをチェックする
             time.sleep(0.2)
+            self.logger.info("イベントカテゴリー選択中・・・")
             if payload.category is not None:
                 self.__select_category_checkbox(driver, wait, payload.category.value)
+            self.logger.info("イベントカテゴリー選択完了")
 
             # 参加条件を記入
             time.sleep(0.2)
+            self.logger.info("参加条件記入中・・・")
             condition_element = "参加条件"
             self.__input_text_by_heading(driver, wait, condition_element, payload.condition)
+            self.logger.info("参加条件記入完了")
 
             # 参加方法を記入
             time.sleep(0.2)
+            self.logger.info("参加方法記入中・・・")
             direction_element = "参加方法"
             self.__input_text_by_heading(driver, wait, direction_element, payload.direction)
+            self.logger.info("参加方法記入完了")
 
             # 備考を記入
             time.sleep(0.2)
+            self.logger.info("備考記入中・・・")
             remarks_element = "備考"
             self.__input_text_by_heading(driver, wait, remarks_element, payload.remarks)
+            self.logger.info("備考記入完了")
 
             # 送信ボタンをクリック
             time.sleep(0.5)
+            self.logger.info("回答送信中・・・")
             self.__click_submit_button(driver, wait)
-        except:
+            self.logger.info("回答送信完了")
+        except Exception as e:
+            self.logger.critical(e)
             raise RuntimeError
         else:
             with open(f"tracer/{payload.section}/{payload.hash}.json", "w", encoding="utf-8") as f:
