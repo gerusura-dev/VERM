@@ -7,9 +7,7 @@ from utils import AutoSubmitter
 
 def main(logger: Logger):
     manager = EventManager(logger)
-    # submitter = AutoSubmitter(logger)
-
-    return
+    submitter = AutoSubmitter(logger)
 
     try:
         for payload in manager:
