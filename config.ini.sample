@@ -1,6 +1,7 @@
 # 書き方
 # [EVENT{連番}] ... [EVENT1]や[EVENT2]で、自動登録するイベントの設定に名前をつける
 # EVENT_NAME={イベント名} ... 登録するイベントの名前
+# GROUP_ID={グループID} ... イベント登録するグループのID
 # PLATFORM={プラットフォーム} ... イベントが対応しているプラットフォーム　[PC, PC/android, android]から選択
 # BASE_DATE={基点日時} ... 指定した日時を基点とし、本スクリプトを実行した日時に最も近い未来のBASE_DATE+INTERVAL日後で自動登録が走る
 # EVENT_TIME={イベント時間} ... イベントが実施される時間をhrで指定する　1時間45分なら1.75と指定する
@@ -23,6 +24,7 @@
 
 # フォーマット
 # EVENT_NAME ... 文字列
+# GROUP_ID ... 文字列
 # PLATFORM ... PC, PC/Android, Android から選択
 # BASE_DATE ... YYYY/MM/DD HH:MM (24時間表記)
 # EVENT_TIME ... 浮動小数点型 (1時間45分 = 1.75)
@@ -36,6 +38,7 @@
 # テンプレート（この行から下をコピペして左端の#を消してください）
 #[EVENT1]
 #EVENT_NAME=イベント名
+#GROUP_ID=グループID
 #PLATFORM=PC
 #BASE_DATE=2025/12/29 22:00
 #EVENT_TIME=1.0
@@ -51,6 +54,7 @@
 # 月曜日用
 [EVENT1]
 EVENT_NAME=撃剣部
+GROUP_ID=*****
 PLATFORM=PC
 BASE_DATE=2025/12/25 22:00
 EVENT_TIME=1.0
@@ -64,6 +68,7 @@ REMARKS=フルトラ推奨
 # 木曜日用
 [EVENT2]
 EVENT_NAME=撃剣部
+GROUP_ID=*****
 PLATFORM=PC
 BASE_DATE=2025/12/25 22:00
 EVENT_TIME=1.0

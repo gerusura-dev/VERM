@@ -3,6 +3,7 @@ from logging import Logger
 from utils import setup_logger
 from utils import EventManager
 from utils import AutoSubmitter
+from utils import login
 
 
 def main(logger: Logger):
@@ -11,9 +12,20 @@ def main(logger: Logger):
 
     try:
         for payload in manager:
-            submitter.submit(payload)
-    finally:
-        submitter.close()
+            logger.info("VRCイベントカレンダー登録開始")
+            # イベントカレンダー登録処理
+            # submitter.submit(payload)
+            logger.info("VRCイベントカレンダー登録完了")
+
+            logger.info("VRC内カレンダー登録開始")
+            # カレンダー登録処理
+            cookies = login(logger)
+            submitter.registration(payload, cookies)
+            logger.info("VRC内カレンダー登録完了")
+    except Exception as e:
+        print(e)
+    # finally:
+        # submitter.close()
 
 
 if __name__ == "__main__":

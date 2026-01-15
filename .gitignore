@@ -4,3 +4,4 @@ __pycache__/
 tracer/
 config.ini
 /logs/
+cookies.json

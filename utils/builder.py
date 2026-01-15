@@ -13,6 +13,7 @@ class Payload:
     logger: Logger
     section: str
     event_name: str
+    group_id: str
     platform: Platform
     start_date_time: datetime
     end_date_time: datetime
@@ -29,6 +30,7 @@ class Payload:
         logger: Logger,
         section: str,
         event_name: str,
+        group_id: str,
         platform: Platform,
         start_date_time: datetime,
         end_date_time: datetime,
@@ -44,6 +46,7 @@ class Payload:
 
         self.__valid(
             event_name,
+            group_id,
             platform,
             start_date_time,
             end_date_time,
@@ -59,6 +62,7 @@ class Payload:
         self.section = section
 
         self.event_name = event_name
+        self.group_id = group_id
         self.platform = platform
         self.start_date_time = start_date_time
         self.end_date_time = end_date_time
@@ -82,6 +86,7 @@ class Payload:
     def __valid(
         self,
         event_name: str,
+        group_id: str,
         platform: Platform,
         start_date_time: datetime,
         end_date_time: datetime,
@@ -95,6 +100,10 @@ class Payload:
     ) -> None:
         if not isinstance(event_name, str):
             self.logger.error(f"イベント名: {event_name} は不正です ... type(event_name): {type(event_name)})")
+            raise TypeError
+
+        if not isinstance(group_id, str):
+            self.logger.error(f"グループID: {group_id} は不正です ... type(event_name): {type(group_id)})")
             raise TypeError
 
         if not isinstance(platform, Platform):

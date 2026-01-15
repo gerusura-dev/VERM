@@ -2,6 +2,7 @@ import os
 from logging import Logger
 from typing import List, Iterator, Optional
 from configparser import ConfigParser
+import datetime
 from datetime import datetime, timedelta
 
 from .builder import Payload
@@ -39,6 +40,7 @@ class EventManager:
 
         for section in self.__config.sections():
             event_name = self.__config[section]["EVENT_NAME"]
+            group_id = self.__config[section]["GROUP_ID"]
             platform = Platform.get_platform(self.__config[section]["PLATFORM"])
             base_date = datetime.strptime(self.__config[section]["BASE_DATE"], "%Y/%m/%d %H:%M")
             event_time = self.__config.getfloat(section, "EVENT_TIME")
@@ -71,6 +73,7 @@ class EventManager:
                 logger=self.logger,
                 section=section,
                 event_name=event_name,
+                group_id=group_id,
                 platform=platform,
                 start_date_time=start_date_time,
                 end_date_time=end_date_time,

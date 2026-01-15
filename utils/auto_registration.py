@@ -1,7 +1,9 @@
 import time
 import json
+import requests
+from typing import Dict
 from logging import Logger
-from datetime import datetime
+from datetime import datetime, timezone
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -13,13 +15,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 from .builder import Payload
+from .vrc import USER_AGENT
+from .vrc import BASE_URL
 
 
 class AutoSubmitter:
     def __init__(self, logger: Logger, timeout: int = 10) -> None:
         self.logger = logger
         self.timeout = timeout
-        self.driver = self._create_driver()
+        # self.driver = self._create_driver()
 
     @staticmethod
     def _create_driver() -> webdriver.Chrome:
@@ -126,6 +130,35 @@ class AutoSubmitter:
                 )
 
             time.sleep(3)
+
+
+    def registration(self, payload: Payload, cookies: Dict[str, str]):
+        body = {
+            "title": payload.event_name,
+            "startsAt": payload.start_date_time.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "endsAt": payload.end_date_time.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "description": payload.desc,
+            "category": "other",
+            "imageId": "file_1903c736-6f5a-4129-bac1-2b5da42bd45f",
+            "sendCreationNotification": True,
+            "accessType": "group"
+        }
+
+        r = requests.post(
+            f"{BASE_URL}/calendar/{payload.group_id}/event",
+            json=body,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Content-Type": "application/json"
+            },
+            cookies=cookies,
+            timeout=30
+        )
+
+        self.logger.info("Status Code: %s", r.status_code)
+
+        r.raise_for_status()
+        return r.json()
 
 
     def close(self) -> None:
