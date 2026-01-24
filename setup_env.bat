@@ -74,10 +74,8 @@ if not exist "%FIRST_RUN_FLAG%" (
 echo.
 echo === setup completed ===
 echo chrome_profile: %CHROME_PROFILE%
-pause
 
 echo.
 echo [OK] setup complete
 echo.
 echo venv: %CD%\.venv
-pause
