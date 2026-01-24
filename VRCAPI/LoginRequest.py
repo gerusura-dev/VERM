@@ -10,6 +10,7 @@
 
 
 # SECTION: Packages(Built-in)
+import os
 import json
 import logging
 import getpass
@@ -102,6 +103,8 @@ class LoginRequest:
 
         r = registration(payload, self.cookies)
         self.logger.info(f"Status Code: {r.status_code}")
+
+        os.makedirs(f"./tracer/{payload.section}", exist_ok=True)
 
         obj = self.__obj_template(payload)
 

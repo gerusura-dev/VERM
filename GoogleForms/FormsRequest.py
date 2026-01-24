@@ -10,6 +10,7 @@
 
 # SECTION: Packages(Built-in)
 import os
+import time
 import json
 import logging
 from datetime import datetime
@@ -87,6 +88,7 @@ class FormsRequest:
                 ctx = Controller.FormsContext(payload, self.driver, self.wait, sequence["element"])
                 sequence["controller"](ctx)
                 self.logger.info(f"{sequence["name"]}終了")
+                time.sleep(0.2)
 
         except Exception as e:
             # ERROR: 1010001
@@ -95,7 +97,7 @@ class FormsRequest:
         else:
             self.logger.info("VRChatイベントカレンダー登録終了")
 
-            os.makedirs(f"tracer/{payload.section}", exist_ok=True)
+            os.makedirs(f"./tracer/{payload.section}", exist_ok=True)
 
             obj = self.__obj_template(payload)
 
