@@ -32,15 +32,15 @@ from .CookieManager import CookieManager
 from .RequestRegistration import registration
 
 
-# SECTION: Class
+# SECTION: Public Class
 class LoginRequest:
     def __init__(self, test: bool = False) -> None:
         # Initialize
-        self.logger: logging.Logger
+        self.logger:         logging.Logger
         self.cookie_manager: CookieManager
-        self.interval: int
-        self.last_exec: Optional[datetime]
-        self.test: bool
+        self.interval:       int
+        self.last_exec:      Optional[datetime]
+        self.test:           bool
 
         # Process
         self.logger = get_logger()
@@ -72,8 +72,8 @@ class LoginRequest:
     def login(self) -> None:
         # Initialize
         is_manual: bool
-        client: vrchatapi.ApiClient
-        auth: AuthenticationApi
+        client:    vrchatapi.ApiClient
+        auth:      AuthenticationApi
 
         # Process
         is_manual, client = self.client
@@ -86,7 +86,7 @@ class LoginRequest:
 
     def submit(self, payload: Payload) -> None:
         # Initialize
-        r: requests.Response
+        r:   requests.Response
         obj: dict[str, str]
 
         # Process
@@ -135,7 +135,7 @@ class LoginRequest:
             now = datetime.now()
 
     def __cookie_login_request(self, auth: AuthenticationApi) -> None:
-        # Initialize
+        # Process
         try:
             _ = auth.get_current_user()
         except UnauthorizedException as e:
@@ -170,10 +170,10 @@ class LoginRequest:
     @staticmethod
     def __make_client_manual() -> vrchatapi.ApiClient:
         # Initialize
-        username: str
-        password: str
+        username:      str
+        password:      str
         configuration: vrchatapi.Configuration
-        api_client: vrchatapi.ApiClient
+        api_client:    vrchatapi.ApiClient
 
         # Process
         username = input("Username or Email: ")
@@ -192,7 +192,7 @@ class LoginRequest:
     def __make_client_cookies(auth: str, two_factor_auth: Optional[str] = None) -> vrchatapi.ApiClient:
         # Initialize
         configuration: vrchatapi.Configuration
-        api_client: vrchatapi.ApiClient
+        api_client:    vrchatapi.ApiClient
         cookie_header: str
 
         # Process

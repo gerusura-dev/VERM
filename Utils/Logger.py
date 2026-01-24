@@ -1,13 +1,16 @@
+# SECTION: Packages(Built-in)
 import os
 import sys
 import logging
 from datetime import datetime
 
 
+# SECTION: Private Constant
 __fmt = "[%(asctime)s] [%(levelname)s] %(message)s"
 __datefmt = "%Y/%m/%d %H:%M:%S"
 
 
+# SECTION: Public Function
 def get_logger(name: str = "VERM", log_dir: str = "logs", level: int = logging.INFO) -> logging.Logger:
     """
     ロガーを返す機能を提供する
@@ -19,6 +22,14 @@ def get_logger(name: str = "VERM", log_dir: str = "logs", level: int = logging.I
     :return: ロガー
     """
 
+    # Initialize
+    logger:         logging.Logger
+    output_name:    str
+    formatter:      logging.Formatter
+    stdout_handler: logging.StreamHandler
+    file_handler:   logging.FileHandler
+
+    # Process
     # ログファイル保存先のルートを作成
     os.makedirs(log_dir, exist_ok=True)
 
@@ -50,6 +61,7 @@ def get_logger(name: str = "VERM", log_dir: str = "logs", level: int = logging.I
     return logger
 
 
+# SECTION: Private Function
 def __setup_dirs(log_dir: str) -> str:
     """
     ログファイルを保存する個別保存先を作成する
@@ -58,6 +70,14 @@ def __setup_dirs(log_dir: str) -> str:
     :return: ログファイルの名前
     """
 
+    # Initialize
+    now:         datetime
+    date:        str
+    time:        str
+    output_dir:  str
+    output_name: str
+
+    # Process
     now = datetime.now()
     date = now.strftime("%Y%m%d")
     time = now.strftime("%H%M%S_%f")
@@ -77,6 +97,10 @@ def __setup_stdout_handler(level: int, formatter: logging.Formatter) -> logging.
     :return: ログハンドラー
     """
 
+    # Initialize
+    handler: logging.StreamHandler
+
+    # Process
     handler = logging.StreamHandler(sys.stdout)
     handler.setLevel(level)
     handler.setFormatter(formatter)
@@ -93,6 +117,10 @@ def __setup_file_handler(level: int, formatter: logging.Formatter, output_name: 
     :return: ログハンドラー
     """
 
+    # Initialize
+    handler: logging.FileHandler
+
+    # Process
     handler = logging.FileHandler(output_name, encoding="utf-8")
     handler.setLevel(level)
     handler.setFormatter(formatter)

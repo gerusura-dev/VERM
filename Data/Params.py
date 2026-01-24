@@ -1,9 +1,11 @@
+# SECTION: Packages(Built-in)
 from enum import Enum
-from typing import Union
 from datetime import datetime
+from typing import List, Union
 from urllib.parse import quote_plus
 
 
+# SECTION: Public Class
 class Params(Enum):
     """
     Google Forms の識別IDを定義
@@ -16,11 +18,12 @@ class Params(Enum):
     """
 
     EventName = 1319903296
-    Platform = 412548841
+    Platform  = 412548841
     StartDate = 1310854397
-    EndDate = 2042374434
-    Mode = 1704463647
+    EndDate   = 2042374434
+    Mode      = 1704463647
 
+    # SECTION: Public Method
     def build(self, value: Union[str, datetime]) -> str:
         """
         URLパラメータとして利用できる文字列を作成する関数
@@ -35,6 +38,13 @@ class Params(Enum):
         :return: 組み立て済みURLパラメータ文字列(日付は必要なパラメータを全て文字列結合したものが返る)
         """
 
+        # Initialize
+        entry: str
+        result: str
+        params: List[str]
+        results: List[str]
+
+        # Process
         entry = f"entry.{self.value}"
 
         if isinstance(value, datetime):

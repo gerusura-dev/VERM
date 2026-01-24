@@ -11,12 +11,16 @@
 |-------------|-----------------|-------------------|
 | Utils       | DataParser.py   | 1000001 ~ 1000003 |
 | GoogleForms | FormsRequest.py | 1010001           |
+| Data        | Payload.py      | 1020001 ~ 1020003 |
 
 ### Warning系
 | Module | File             | Codes             |
 |--------|------------------|-------------------|
 | Utils  | DataParser.py    | 2000001           |
 | VRCAPI | CookieManager.py | 2010001 ~ 2010002 |
+| Data   | Category.py      | 2020001 ~ 2020002 |
+| Data   | Platform.py      | 2030001           |
+| Data   | Visibility.py    | 2040001           |
 
 ## Error系
 
@@ -33,8 +37,16 @@
   | Error Code | Module      | File            | Summary    |
   |------------|-------------|-----------------|------------|
   | 1010001    | GoogleForms | FormsRequest.py | イベントの登録に失敗 |
-
+  
 - 1020000番台
+
+  | Error Code | Module | File       | Summary           |
+  |------------|--------|------------|-------------------|
+  | 1020001    | Data   | Payload.py | イベント開始日時が不正       |
+  | 1020002    | Data   | Payload.py | イベント終了日時が不正       |
+  | 1020003    | Data   | Payload.py | イベント終了日時が開始日時より過去 |
+
+- 1030000番台
 
 ## Warning系
 
@@ -48,8 +60,26 @@
 
   | Warning Code | Module | File             | Summary       |
   |--------------|--------|------------------|---------------|
-  | 2000001      | VRCAPI | CookieManager.py | Cookieが見つからない |
+  | 2010001      | VRCAPI | CookieManager.py | Cookieが見つからない |
   | 2010002      | VRCAPI | CookieManager.py | Cookieデータが不正  |
 
+- 2020000番台
 
-- 
+  | Warning Code | Module | File        | Summary          |
+  |--------------|--------|-------------|------------------|
+  | 2020001      | Data   | Category.py | イベントカテゴリーの設定値が不正 |
+  | 2020002      | Data   | Category.py | グループカテゴリーの設定値が不正 |
+
+- 2030000番台
+
+  | Warning Code | Module | File      | Summary         |
+  |--------------|--------|-----------|-----------------|
+  | 2030001      | Data   | Params.py | プラットフォームの設定値が不正 |
+
+- 2040000番台
+
+  | Warning Code | Module | File          | Summary     |
+  |--------------|--------|---------------|-------------|
+  | 2040001      | Data   | Visibility.py | 公開範囲の設定値が不正 |
+
+- 2050000番台

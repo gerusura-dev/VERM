@@ -6,7 +6,7 @@ from GoogleForms import FormsRequest
 
 def main(logger: Logger):
     manager = EventManager()
-    forms = FormsRequest(test=True)
+    forms = FormsRequest()
     api = LoginRequest()
 
     for payload in manager:

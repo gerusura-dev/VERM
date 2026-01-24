@@ -20,7 +20,7 @@ import Const
 from Utils import get_logger
 
 
-# SECTION: Class
+# SECTION: Public Class
 class CookieManager:
     def __init__(self) -> None:
         # Initialize
@@ -63,9 +63,9 @@ class CookieManager:
     def extract(self, headers: Optional[dict]) -> None:
         # Initialize
         set_cookie: str
-        jar: SimpleCookie
-        out: Dict[str, str]
-        key: str
+        jar:        SimpleCookie
+        out:        Dict[str, str]
+        key:        str
 
         # Process
         if self.cookies is None:

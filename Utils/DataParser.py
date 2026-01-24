@@ -34,9 +34,7 @@ from Data import (
 )
 
 
-# SECTION: Parser Utilities
-
-
+# SECTION: Common Function
 def value_error(message: str, value: Any, _: Optional[Exception] = None) -> None:
     # Initialize
     logger: logging.Logger
@@ -98,9 +96,7 @@ def uuid_parser(value: Any, config_name:str, uuid_str: str) -> None:
         value_error(f"ERROR: 1000003 => 設定値の '{config_name}' の形式が不正です", value)
 
 
-# SECTION: Parser
-
-
+# SECTION: Public Function
 def event_name_parser(config: ConfigParser, section: str) -> str:
     # INFO: Require
 

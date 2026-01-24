@@ -1,9 +1,11 @@
+# SECTION: Packages(Built-in)
 import os
 from logging import Logger
 from typing import List, Iterator
 from datetime import datetime, timedelta
 from configparser import ConfigParser
 
+# SECTION: Packages(Original)
 from Data import Payload, ModeData
 from .DataParser import (
     get_logger,
@@ -25,6 +27,7 @@ from .DataParser import (
 )
 
 
+# SECTION: Public Class
 class EventManager:
     def __init__(self, config_file: str = "config.ini") -> None:
         # Initialize
@@ -59,6 +62,7 @@ class EventManager:
     def __iter__(self) -> Iterator[Payload]:
         return iter(self.events)
 
+    # SECTION: Private Methods
     def __parser(self) -> List[Payload]:
         # Initialize
         event_name:     str
@@ -76,7 +80,6 @@ class EventManager:
         thumbnail:      str
         visibility:     str
         notification:   bool
-
         start_date_time: datetime
         end_date_time:   datetime
         mode:            str
@@ -129,13 +132,18 @@ class EventManager:
         :return: イベントを開催する日時
         """
 
-        # 現在時刻を取得（未来を判定するのに使用）
+        # Initialize
+        now:        datetime
+        days_ahead: int
+        candidate:  datetime
+
+        # Process
         now = datetime.now()
 
-        # 基準日時と現在の曜日の差分日数を計算（現在日時から何日足せば良いか判断する）
+        # NOTE: 基準日時と現在の曜日の差分日数を計算（現在日時から何日足せば良いか判断する）
         days_ahead = (base_date.weekday() - now.weekday()) % 7
 
-        # 現在時刻に差分日数を足し、時刻を開催時刻に変更する
+        # NOTE: 現在時刻に差分日数を足し、時刻を開催時刻に変更する
         candidate = now + timedelta(days=days_ahead)
         candidate = candidate.replace(
             hour=base_date.hour,
@@ -144,7 +152,7 @@ class EventManager:
             microsecond=0
         )
 
-        # もし仮に計算後の日時が現在と同じor過去である場合、さらに一週間後を指定する
+        # NOTE: もし仮に計算後の日時が現在と同じor過去である場合、さらに一週間後を指定する
         if candidate <= now:
             candidate += timedelta(days=7)
 

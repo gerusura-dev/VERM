@@ -1,5 +1,4 @@
 # SECTION: Packages(Built-in)
-from time import sleep
 from typing import Iterable
 from dataclasses import dataclass
 
@@ -19,83 +18,21 @@ from Data import Payload
 @dataclass(frozen=True)
 class FormsContext:
     payload: Payload
-    driver: webdriver.Chrome
-    wait: WebDriverWait
+    driver:  webdriver.Chrome
+    wait:    WebDriverWait
     element: str
 
     def __iter__(self) -> Iterable:
         return iter((self.payload, self.driver, self.wait, self.element))
 
 
-# SECTION: Common Function
-def __presence_element(wait: WebDriverWait,element: str) -> WebElement:
-    # Process
-    return wait.until(
-        ec.presence_of_element_located(
-            (
-                By.XPATH,
-                element
-            )
-        )
-    )
-
-
-def __get_container(wait: WebDriverWait, element: str) -> WebElement:
-    # Initialize
-    heading: WebElement
-
-    # Process
-    heading = __presence_element(wait, element)
-    return heading.find_element(
-        By.XPATH,
-        "ancestor::div[contains(@jsmodel,'CP1oW')]"
-    )
-
-
-def __input_text_heading(ctx: FormsContext, value: str) -> None:
-    # Initialize
-    payload: Payload
-    driver: webdriver.Chrome
-    wait: WebDriverWait
-    element: str
-    container: WebElement
-    textarea: WebElement
-
-    # Process
-    payload, driver, wait, element = ctx
-
-    container = __get_container(wait, element)
-
-    driver.execute_script(
-        "arguments[0].scrollIntoView({block:'center'});",
-        container
-    )
-    driver.execute_script(
-        "arguments[0].click();",
-        container
-    )
-
-    textarea = container.find_element(By.XPATH, ".//textarea")
-
-    textarea.clear()
-    textarea.send_keys(value)
-
-    driver.execute_script(
-        """
-        arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-        arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-        """,
-        textarea
-    )
-
-
-# SECTION: Function
+# SECTION: Public Function
 def click_overwrite(ctx: FormsContext) -> None:
     # Initialize
-    driver: webdriver.Chrome
-    wait: WebDriverWait
+    driver:  webdriver.Chrome
+    wait:    WebDriverWait
     element: str
-    link: WebElement
+    link:    WebElement
 
     # Process
     _, driver, wait, element = ctx
@@ -114,9 +51,9 @@ def click_overwrite(ctx: FormsContext) -> None:
 
 def click_checkbox(ctx: FormsContext) -> None:
     # Initialize
-    driver: webdriver.Chrome
-    wait: WebDriverWait
-    element: str
+    driver:   webdriver.Chrome
+    wait:     WebDriverWait
+    element:  str
     checkbox: WebElement
 
     # Process
@@ -132,9 +69,9 @@ def click_checkbox(ctx: FormsContext) -> None:
 
 def click_button(ctx: FormsContext) -> None:
     # Initialize
-    wait: WebDriverWait
+    wait:    WebDriverWait
     element: str
-    button: WebElement
+    button:  WebElement
 
     # Process
     _, _, wait, element = ctx
@@ -145,10 +82,10 @@ def click_button(ctx: FormsContext) -> None:
 
 def click_button_submit(ctx: FormsContext) -> None:
     # Initialize
-    driver: webdriver.Chrome
-    wait: WebDriverWait
+    driver:  webdriver.Chrome
+    wait:    WebDriverWait
     element: str
-    button: WebElement
+    button:  WebElement
 
     # Process
     _, driver, wait, element = ctx
@@ -162,11 +99,11 @@ def click_button_submit(ctx: FormsContext) -> None:
 
 def input_text_owner(ctx: FormsContext) -> None:
     # Initialize
-    payload: Payload
-    driver: webdriver.Chrome
-    wait: WebDriverWait
-    element: str
-    heading: WebElement
+    payload:   Payload
+    driver:    webdriver.Chrome
+    wait:      WebDriverWait
+    element:   str
+    heading:   WebElement
     container: WebElement
     input_box: WebElement
 
@@ -199,9 +136,9 @@ def input_text_owner(ctx: FormsContext) -> None:
 
 def input_text_desc(ctx: FormsContext) -> None:
     # Initialize
-    payload: Payload
-    wait: WebDriverWait
-    element: str
+    payload:   Payload
+    wait:      WebDriverWait
+    element:   str
     input_box: WebElement
 
     # Process
@@ -228,10 +165,10 @@ def input_text_remarks(ctx: FormsContext) -> None:
 
 def select_category_checkbox(ctx: FormsContext) -> None:
     # Initialize
-    payload: Payload
-    driver: webdriver.Chrome
-    wait: WebDriverWait
-    element: str
+    payload:  Payload
+    driver:   webdriver.Chrome
+    wait:     WebDriverWait
+    element:  str
     checkbox: WebElement
 
     # Process
@@ -250,3 +187,65 @@ def select_category_checkbox(ctx: FormsContext) -> None:
                 "arguments[0].click();",
                 checkbox
             )
+
+
+# SECTION: Private Function
+def __presence_element(wait: WebDriverWait,element: str) -> WebElement:
+    # Process
+    return wait.until(
+        ec.presence_of_element_located(
+            (
+                By.XPATH,
+                element
+            )
+        )
+    )
+
+
+def __get_container(wait: WebDriverWait, element: str) -> WebElement:
+    # Initialize
+    heading: WebElement
+
+    # Process
+    heading = __presence_element(wait, element)
+    return heading.find_element(
+        By.XPATH,
+        "ancestor::div[contains(@jsmodel,'CP1oW')]"
+    )
+
+
+def __input_text_heading(ctx: FormsContext, value: str) -> None:
+    # Initialize
+    payload:   Payload
+    driver:    webdriver.Chrome
+    wait:      WebDriverWait
+    element:   str
+    container: WebElement
+    textarea:  WebElement
+
+    # Process
+    payload, driver, wait, element = ctx
+
+    container = __get_container(wait, element)
+
+    driver.execute_script(
+        "arguments[0].scrollIntoView({block:'center'});",
+        container
+    )
+    driver.execute_script(
+        "arguments[0].click();",
+        container
+    )
+
+    textarea = container.find_element(By.XPATH, ".//textarea")
+
+    textarea.clear()
+    textarea.send_keys(value)
+
+    driver.execute_script(
+        """
+        arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+        arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+        """,
+        textarea
+    )

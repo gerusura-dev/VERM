@@ -10,13 +10,13 @@ import Const
 from Data import Payload
 
 
-# SECTION: Function
+# SECTION: Public Function
 def registration(payload: Payload, cookies: Dict[str, str], timeout: int = 30) -> requests.Response:
     # Initialize
-    url: str
-    body: Dict[str, str]
+    url:     str
+    body:    Dict[str, str]
     headers: Dict[str, str]
-    r: requests.Response
+    r:       requests.Response
 
     # Process
     url = __url_template(payload)

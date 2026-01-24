@@ -10,7 +10,6 @@
 
 # SECTION: Packages(Built-in)
 import os
-import time
 import json
 import logging
 from datetime import datetime
@@ -29,17 +28,17 @@ from Data import Payload
 from Utils import get_logger
 
 
-# SECTION: Class
+# SECTION: Public Class
 class FormsRequest:
     def __init__(self, timeout: int = 10, test: bool = False) -> None:
         # Initialize
-        self.logger: logging.Logger
-        self.timeout: int
-        self.driver: webdriver.Chrome
-        self.wait: WebDriverWait
+        self.logger:    logging.Logger
+        self.timeout:   int
+        self.driver:    webdriver.Chrome
+        self.wait:      WebDriverWait
         self.sequencer: List[Dict[str, callable]]
-        self.test: bool
-        self.interval: int
+        self.test:      bool
+        self.interval:  int
         self.last_exec: Optional[datetime]
 
         # Process
@@ -161,61 +160,61 @@ class FormsRequest:
     def __sequencer() -> List[Dict[str, callable]]:
         # Process
         return [
-            # フォームの上書き確認ボタンをクリック
+            # NOTE: フォームの上書き確認ボタンをクリック
             {
                 "name": "上書き確認ボタン処理",
                 "controller": Controller.click_overwrite,
                 "element": "//div[@role='alertdialog']//a[.//span[text()='続行']]"
             },
-            # 返信用メールアドレスのチェックボックスをクリック
+            # NOTE: 返信用メールアドレスのチェックボックスをクリック
             {
                 "name": "返信用アドレスチェック処理",
                 "controller": Controller.click_checkbox,
                 "element": "//div[@role='checkbox' and contains(@aria-label,'返信に表示するメールアドレスとして')]"
             },
-            # イベント詳細情報登録画面に遷移
+            # NOTE: イベント詳細情報登録画面に遷移
             {
                 "name": "イベント詳細ページへの遷移処理",
                 "controller": Controller.click_button,
                 "element": "//div[@role='button' and (.//span[text()='次へ'] or .//span[text()='Next'])]"
             },
-            # イベント主催者入力
+            # NOTE: イベント主催者入力
             {
                 "name": "イベント主催者入力処理",
                 "controller": Controller.input_text_owner,
                 "element": "//div[@role='heading' and .//span[contains(text(),'イベント主催者')]]"
             },
-            # イベント内容入力
+            # NOTE: イベント内容入力
             {
                 "name": "イベント内容入力処理",
                 "controller": Controller.input_text_desc,
                 "element": "//textarea[contains(@aria-labelledby,'i6')]"
             },
-            # イベントカテゴリー選択
+            # NOTE: イベントカテゴリー選択
             {
                 "name": "イベントカテゴリー選択処理",
                 "controller": Controller.select_category_checkbox,
                 "element": "//div[@role='checkbox' and @aria-label='{}']"
             },
-            # 参加条件の記入
+            # NOTE: 参加条件の記入
             {
                 "name": "イベント参加条件の記入処理",
                 "controller": Controller.input_text_condition,
                 "element": "//div[@role='heading' and .//span[contains(text(),'参加条件')]]"
             },
-            # 参加方法の記入
+            # NOTE: 参加方法の記入
             {
                 "name": "イベント参加方法の記入処理",
                 "controller": Controller.input_text_direction,
                 "element": "//div[@role='heading' and .//span[contains(text(),'参加方法')]]"
             },
-            # 備考の記入
+            # NOTE: 備考の記入
             {
                 "name": "イベント備考の記入処理",
                 "controller": Controller.input_text_remarks,
                 "element": "//div[@role='heading' and .//span[contains(text(),'備考')]]"
             },
-            # 送信ボタンをクリック
+            # NOTE: 送信ボタンをクリック
             {
                 "name": "イベント登録リクエスト処理",
                 "controller": Controller.click_button_submit,

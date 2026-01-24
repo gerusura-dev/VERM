@@ -7,9 +7,13 @@ https://docs.google.com/forms/{フォーム情報}/viewform?usp=pp_url&entry.{�
 """
 
 
+# SECTION: Package(Original)
 from .Params import Params
-from .Category import EventCategoryData, GroupCategoryData
-from .Platform import PlatformData
 from .Mode import ModeData
-from .Visibility import VisibilityData
 from .Payload import Payload
+from .Platform import PlatformData
+from .Visibility import VisibilityData
+from .Category import (
+    EventCategoryData,
+    GroupCategoryData
+)
