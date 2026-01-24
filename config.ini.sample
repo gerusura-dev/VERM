@@ -1,75 +1,100 @@
 # 書き方
 # [EVENT{連番}] ... [EVENT1]や[EVENT2]で、自動登録するイベントの設定に名前をつける
 # EVENT_NAME={イベント名} ... 登録するイベントの名前
-# PLATFORM={プラットフォーム} ... イベントが対応しているプラットフォーム　[PC, PC/android, android]から選択
+# GROUP_ID={グループID} ... イベントを開催するグループのID
+# GROUP_CATEGORY={グループジャンル} ... 以下の一覧からイベントジャンルを一つだけ選択（VRChat内のイベントカレンダーに表示するジャンル）
+# A: Music
+# B: Gaming
+# C: Hangout
+# D: Exploring
+# E: Avatars
+# F: Film & Media
+# G: Dance
+# H: Roleplaying
+# I: Performance
+# J: Wellness
+# K: Arts
+# L: Education
+# M: Other
+# PLATFORM={プラットフォーム} ... 以下の一覧からイベントが対応しているプラットフォームをから選択
+# A: PC
+# B: PC/android
+# C: android
 # BASE_DATE={基点日時} ... 指定した日時を基点とし、本スクリプトを実行した日時に最も近い未来のBASE_DATE+INTERVAL日後で自動登録が走る
 # EVENT_TIME={イベント時間} ... イベントが実施される時間をhrで指定する　1時間45分なら1.75と指定する
 # OWNER={イベント主催者} ... イベントの主催者を指定する
 # DESC={イベントの内容} ... イベントの内容
-# CATEGORY={イベントジャンル番号} ... 以下の一覧からイベントジャンルを番号で選ぶ
-# 0: アバター試着会
-# 1: 改変アバター交流会
-# 2: その他交流会
-# 3: VR飲み会
-# 4: 店舗系イベント
-# 5: 音楽系イベント
-# 6: 学術系イベント
-# 7: ロールプレイ
-# 8: 初心者向けイベント
-# 9: 定期イベント
+# EVENT_CATEGORY={イベントジャンル},{イベントジャンル} ... 以下の一覧からイベントジャンルをコンマ区切りで列挙する（VRChatEventCalendarに表示するジャンル）
+# A: アバター試着会
+# B: 改変アバター交流会
+# C: その他交流会
+# D: VR飲み会
+# E: 店舗系イベント
+# F: 音楽系イベント
+# G: 学術系イベント
+# H: ロールプレイ
+# I: 初心者向けイベント
+# J: 定期イベント
 # JOIN_CONDITION={参加条件} ... イベントの参加条件
 # JOIN_DIRECTION={参加方法} ... イベントの参加方法
 # REMARKS={備考} ... 備考
+# EVENT_THUMBNAIL={ファイルID} ... イベント通知のサムネイル画像のIDを指定する
+# VISIBILITY={公開範囲} ... 以下の二つからイベントの公開範囲を選択
+# A: Public
+# B: Group
+# Notification={真偽値} ... イベント登録時にグループのメンバーに通知するかを決める
 
 # フォーマット
 # EVENT_NAME ... 文字列
+# GROUP_ID ... 文字列
+# GROUP_CATEGORY ... 文字
 # PLATFORM ... PC, PC/Android, Android から選択
 # BASE_DATE ... YYYY/MM/DD HH:MM (24時間表記)
 # EVENT_TIME ... 浮動小数点型 (1時間45分 = 1.75)
 # OWNER ... 文字列
 # DESC ... 文字列
-# CATEGORY ... 整数（未入力可）
-# JOIN_CONDITION ... 文字列
-# JOIN_DIRECTION ... 文字列
-# REMARKS ... 文字列
+# EVENT_CATEGORY ... 文字列（未入力可）
+# JOIN_CONDITION ... 文字列（未入力可）
+# JOIN_DIRECTION ... 文字列（未入力可）
+# REMARKS ... 文字列（未入力可）
+# EVENT_THUMBNAIL ... 文字列（未入力可）
+# VISIBILITY ... 整数
+# Notification ... 真偽値
 
 # テンプレート（この行から下をコピペして左端の#を消してください）
 #[EVENT1]
 #EVENT_NAME=イベント名
+#GROUP_ID=grp_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#GROUP_CATEGORY=M
 #PLATFORM=PC
 #BASE_DATE=2025/12/29 22:00
 #EVENT_TIME=1.0
 #OWNER=名前
 #DESC=イベント内容（未入力可）
-#CATEGORY=3（未入力可）
+#EVENT_CATEGORY=C,D,E（未入力可）
 #JOIN_CONDITION=参加条件（未入力可）
 #JOIN_DIRECTION=参加方法（未入力可）
 #REMARKS=備考（未入力可）
+#EVENT_THUMBNAIL=file_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx（未入力可）
+#VISIBILITY=B
+#Notification=False
+
 
 ########## ここから下にテンプレートを貼り付けて設定内容を記入してください ##########
 
-# 月曜日用
 [EVENT1]
-EVENT_NAME=撃剣部
-PLATFORM=PC
-BASE_DATE=2025/12/25 22:00
+EVENT_NAME=げるにゃんふれあいコーナー
+GROUP_ID=
+GROUP_CATEGORY=M
+PLATFORM=A
+BASE_DATE=2025/12/29 22:00
 EVENT_TIME=1.0
-OWNER=Noih
-DESC=刀キットで命を奪い合う！
-CATEGORY=3
-JOIN_CONDITION=グループに参加すること
-JOIN_DIRECTION=グループに参加後、グループインスタンスにJoin
-REMARKS=フルトラ推奨
-
-# 木曜日用
-[EVENT2]
-EVENT_NAME=撃剣部
-PLATFORM=PC
-BASE_DATE=2025/12/25 22:00
-EVENT_TIME=1.0
-OWNER=Noih
-DESC=刀キットで命を奪い合う！
-CATEGORY=3
-JOIN_CONDITION=グループに参加すること
-JOIN_DIRECTION=グループに参加後、グループインスタンスにJoin
-REMARKS=フルトラ推奨
+OWNER=げるすらいむ
+DESC=げるにゃんに癒してもらおう！（イベント登録テスト）
+EVENT_CATEGORY=C,H
+JOIN_CONDITION=げるにゃんの飼い主限定！
+JOIN_DIRECTION=グループに参加後、グループインスタンスにJoin！
+REMARKS=イベント登録テスト
+EVENT_THUMBNAIL=
+VISIBILITY=B
+NOTIFICATION=TRUE

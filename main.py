@@ -1,23 +1,29 @@
 from logging import Logger
-
-from utils import setup_logger
-from utils import EventManager
-from utils import AutoSubmitter
+from Utils import EventManager, get_logger
+from VRCAPI import LoginRequest
+from GoogleForms import FormsRequest
 
 
 def main(logger: Logger):
-    manager = EventManager(logger)
-    submitter = AutoSubmitter(logger)
+    manager = EventManager()
+    forms = FormsRequest()
+    api = LoginRequest()
 
-    try:
-        for payload in manager:
-            submitter.submit(payload)
-    finally:
-        submitter.close()
+    for payload in manager:
+        logger.info("VRCイベントカレンダー登録開始")
+        forms.submit(payload)
+        logger.info("VRCイベントカレンダー登録完了")
+
+    for payload in manager:
+        logger.info("VRC内カレンダー登録開始")
+        api.submit(payload)
+        logger.info("VRC内カレンダー登録完了")
+
+    forms.close()
 
 
 if __name__ == "__main__":
-    generated_logger = setup_logger()
+    generated_logger = get_logger()
 
     generated_logger.info("自動登録処理開始")
     main(generated_logger)
