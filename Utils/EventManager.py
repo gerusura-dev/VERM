@@ -1,3 +1,13 @@
+"""
+
+# ERROR CODE
+  1030000番台割り当て
+
+  - ERROR: 1030001 => config.iniの基本的な書式に問題がある
+
+"""
+
+
 # SECTION: Packages(Built-in)
 import os
 from logging import Logger
@@ -47,7 +57,15 @@ class EventManager:
 
         # 設定ファイル読込
         self.config = ConfigParser()
-        self.config.read(config_file, encoding="utf-8")
+
+        try:
+            # NOTE: .iniファイルの基本的な書き方に問題があった場合はここでトラブル
+            self.config.read(config_file, encoding="utf-8")
+        except Exception as e:
+            # ERROR: 1030001
+            self.logger.error(e)
+            self.logger.error("Error: 1030001 => config.iniの書式が不正です")
+            raise e
 
         # 登録するイベントの一覧を取得
         self.events = self.__parser()

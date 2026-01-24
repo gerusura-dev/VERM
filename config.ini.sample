@@ -48,7 +48,7 @@
 # EVENT_NAME ... 文字列
 # GROUP_ID ... 文字列
 # GROUP_CATEGORY ... 文字
-# PLATFORM ... PC, PC/Android, Android から選択
+# PLATFORM ... 文字
 # BASE_DATE ... YYYY/MM/DD HH:MM (24時間表記)
 # EVENT_TIME ... 浮動小数点型 (1時間45分 = 1.75)
 # OWNER ... 文字列

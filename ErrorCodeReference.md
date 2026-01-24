@@ -12,6 +12,7 @@
 | Utils       | DataParser.py   | 1000001 ~ 1000003 |
 | GoogleForms | FormsRequest.py | 1010001           |
 | Data        | Payload.py      | 1020001 ~ 1020003 |
+| Utils       | EventManager.py | 1030001           |
 
 ### Warning系
 | Module | File             | Codes             |
@@ -47,6 +48,12 @@
   | 1020003    | Data   | Payload.py | イベント終了日時が開始日時より過去 |
 
 - 1030000番台
+
+  | Error Code | Module | File            | Summary          |
+  |------------|--------|-----------------|------------------|
+  | 1030001    | Utils  | EventManager.py | config.iniの書式が不正 |
+
+- 1040000番台
 
 ## Warning系
 
