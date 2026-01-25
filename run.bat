@@ -8,7 +8,6 @@ echo [INFO] Check VERM Version ...
 git pull
 if errorlevel 1 (
   echo [WARNING] Failed to check VERM version
-  exit /b 1
 )
 
 set CHROME_PROFILE=%BASE_DIR%chrome_profile

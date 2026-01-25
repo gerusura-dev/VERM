@@ -9,3 +9,12 @@ dependencies = [
     "vrchatapi>=1.20.7",
     "webdriver-manager>=4.0.2",
 ]
+
+[tool.setuptools.packages.find]
+include = [
+    "Data*",
+    "Const*",
+    "Utils*",
+    "VRCAPI*",
+    "GoogleForms*"
+]
