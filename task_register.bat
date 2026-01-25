@@ -1,13 +1,8 @@
 @echo off
-REM ============================
-REM この bat のあるディレクトリ
-REM ============================
+
 set BASE_DIR=%~dp0
 cd /d %BASE_DIR%
 
-REM ============================
-REM 実行する bat
-REM ============================
 set RUN_BAT=%BASE_DIR%\run.bat
 
 if not exist "%RUN_BAT%" (
@@ -16,14 +11,8 @@ if not exist "%RUN_BAT%" (
     exit /b 1
 )
 
-REM ============================
-REM 設定
-REM ============================
 set TASK_NAME=VRCEventAutoRegister
 
-REM ============================
-REM タスク登録
-REM ============================
 schtasks /create ^
   /tn "%TASK_NAME%" ^
   /tr "cmd.exe /c \"\"%RUN_BAT%\"\"" ^
@@ -35,9 +24,6 @@ schtasks /create ^
   /rl HIGHEST ^
   /f
 
-REM ============================
-REM 取りこぼし防止（念のため再設定）
-REM ============================
 schtasks /change ^
   /tn "%TASK_NAME%" ^
   /ri 360
@@ -49,5 +35,5 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo [OK] task name "%TASK_NAME%" registered
-echo execute time: 00:00 / 06:00 / 12:00 / 18:00
+echo execute time: 00:00 / 03:00 / 06:00 / 09:00 / 12:00 / 15:00 / 18:00 / 21:00
 pause

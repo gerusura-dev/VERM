@@ -1,7 +1,5 @@
 @echo off
-REM =====================================
-REM プロジェクトディレクトリへ移動
-REM =====================================
+
 cd /d %~dp0
 
 echo [INFO] Checking Python...
@@ -12,9 +10,6 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-REM =====================================
-REM uv インストール
-REM =====================================
 echo [INFO] Installing uv...
 py -m pip install --upgrade pip
 py -m pip install --upgrade uv
@@ -25,15 +20,9 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-REM =====================================
-REM 仮想環境作成
-REM =====================================
 echo [INFO] Creating virtual environment (.venv)...
 py -m uv venv .venv
 
-REM =====================================
-REM 依存関係インストール
-REM =====================================
 if exist pyproject.toml (
     echo [INFO] Installing dependencies into .venv...
     py -m uv run pip install .
@@ -41,9 +30,6 @@ if exist pyproject.toml (
     echo [WARN] pyproject.toml not found
 )
 
-REM =====================================
-REM chrome_profile 初期化
-REM =====================================
 set CHROME_PROFILE=%CD%\chrome_profile
 set FIRST_RUN_FLAG=%CHROME_PROFILE%\FirstRun.done
 
@@ -51,9 +37,6 @@ if not exist "%CHROME_PROFILE%" (
     mkdir "%CHROME_PROFILE%"
 )
 
-REM =====================================
-REM 初回のみ Chrome 起動
-REM =====================================
 if not exist "%FIRST_RUN_FLAG%" (
     echo.
     echo === First time setup detected ===
